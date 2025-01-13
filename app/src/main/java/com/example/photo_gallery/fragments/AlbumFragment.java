@@ -20,7 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photo_gallery.R;
+import com.example.photo_gallery.adapters.AlbumThumbnailAdapter;
 import com.example.photo_gallery.models.Album;
+import com.example.photo_gallery.utils.AlbumManager;
 
 import java.util.ArrayList;
 import java.util.List;
