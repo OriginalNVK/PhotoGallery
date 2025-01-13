@@ -8,71 +8,85 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/back_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="start"
-        android:background="@drawable/baseline_arrow_back_24"
-        android:contentDescription="Back"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_solo_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            android:background="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Back"/>
 
-    <TextView
-        android:id="@+id/solo_image_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/light_purple"
-        android:gravity="center_vertical|center_horizontal"
-        android:paddingHorizontal="20dp"
-        android:layout_marginEnd="48dp"
-        android:textSize="24sp"
-        android:textColor="@android:color/primary_text_dark" />
+        <TextView
+            android:id="@+id/txtView_solo_image_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/light_purple"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingHorizontal="20dp"
+            android:layout_marginEnd="48dp"
+            android:textSize="24sp"
+            android:textColor="@android:color/primary_text_dark" />
+
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/solo_image_content"
+        android:id="@+id/imgView_solo_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center|fill"
         android:layout_weight="2"
         android:paddingVertical="16dp"
-        android:contentDescription="Default image content"/>
-    
+        android:contentDescription="Default Image Content" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/share_image_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/baseline_open_in_browser_24"
-            android:contentDescription="Share Image"/>
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="16dp"
+        android:background="@drawable/border_form"
+        android:gravity="center">
+
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/set_as_background_btn"
+            android:id="@+id/btn_share_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/baseline_open_in_browser_24" />
+        <Space
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_solo_set_background"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/baseline_adjust_24"
-            android:contentDescription="Set as background"/>
+            android:contentDescription="Set as background" />
+
+        <Space
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/add_to_album_btn"
+            android:id="@+id/btn_solo_add_to_album"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/baseline_add_circle_outline_24"
-            android:contentDescription="Add to album"/>
+            android:contentDescription="Add to album" />
+
+        <Space
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/delete_image_btn"
+            android:id="@+id/btn_solo_delete_from_album"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/baseline_delete_outline_24"
-            android:contentDescription="Delete from album"/>
+            android:contentDescription="Delete From Album" />
     </LinearLayout>
-
-
 </LinearLayout>

@@ -19,7 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class AlbumThumbnailAdapter extends RecyclerView.Adapter{
+public class AlbumThumbnailAdapter extends RecyclerView.Adapter<AlbumThumbnailAdapter.AlbumViewHolder> {
     private List<Album> albums;
     private Context context;
     private OnAlbumClickListener listener;
@@ -39,8 +39,7 @@ public class AlbumThumbnailAdapter extends RecyclerView.Adapter{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position)
-    {
+    public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
         Album album = albums.get(position);
 
         holder.albumName.setText(album.getName());
@@ -48,17 +47,16 @@ public class AlbumThumbnailAdapter extends RecyclerView.Adapter{
         int imageCount = album.getListImage().size();
         holder.albumImageCount.setText(imageCount + " images");
 
-        if(!album.getListImage().isEmpty()){
-        ImageItem latestImage = album.getListImage().stream()
-                .max(Comparator.comparingLong(ImageItem::getDateTaken))
-                .get();
+        if (!album.getListImage().isEmpty()) {
+            ImageItem latestImage = album.getListImage().stream()
+                    .max(Comparator.comparingLong(ImageItem::getDateTaken))
+                    .get();
 
-        Glide.with(context)
-                .load(latestImage.getImagePath())
-                .centerCrop()
-                .into(holder.albumThumbnail);
-        }
-        else{
+            Glide.with(context)
+                    .load(latestImage.getImagePath())
+                    .centerCrop()
+                    .into(holder.albumThumbnail);
+        } else {
             holder.albumThumbnail.setImageResource(R.drawable.default_album_thumbnail);
         }
 
