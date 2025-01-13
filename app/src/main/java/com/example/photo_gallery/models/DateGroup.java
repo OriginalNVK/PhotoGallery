@@ -1,4 +1,5 @@
 package com.example.photo_gallery.models;
+
 import java.util.List;
 
 public class DateGroup {
@@ -10,11 +11,11 @@ public class DateGroup {
         this.images = images;
     }
 
-    public String getDate(){
+    public String getDate() {
         return date;
     }
 
-    public List<ImageItem> getImages(){
+    public List<ImageItem> getImages() {
         return images;
     }
 }

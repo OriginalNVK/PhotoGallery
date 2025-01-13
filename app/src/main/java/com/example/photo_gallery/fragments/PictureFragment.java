@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,14 +19,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.photo_gallery.R;
 import com.example.photo_gallery.activities.SoloImageActivity;
 import com.example.photo_gallery.adapters.DateGroupAdapter;
-
 import com.example.photo_gallery.adapters.MonthGroupAdapter;
 import com.example.photo_gallery.adapters.YearGroupAdapter;
 import com.example.photo_gallery.databinding.FragmentPictureBinding;
 import com.example.photo_gallery.models.DateGroup;
 import com.example.photo_gallery.models.ImageItem;
-import com.example.photo_gallery.utils.ImageFetcher;
-import com.example.photo_gallery.utils.ImageGrouping;
+import com.example.photo_gallery.utilities.ImageFetcher;
+import com.example.photo_gallery.utilities.ImageGrouping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,7 +141,7 @@ public class PictureFragment extends Fragment {
             }
         });
 
-        binding.randomImageBtn.setOnClickListener(view -> handleRandomImage());
+        binding.btnRandomImage.setOnClickListener(view -> handleRandomImage());
 
         return binding.getRoot();
     }

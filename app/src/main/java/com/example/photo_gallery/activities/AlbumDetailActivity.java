@@ -1,5 +1,6 @@
 package com.example.photo_gallery.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,8 +18,8 @@ import com.example.photo_gallery.adapters.DateGroupAdapter;
 import com.example.photo_gallery.models.Album;
 import com.example.photo_gallery.models.DateGroup;
 import com.example.photo_gallery.models.ImageItem;
-import com.example.photo_gallery.utils.AlbumManager;
-import com.example.photo_gallery.utils.ImageGrouping;
+import com.example.photo_gallery.utilities.AlbumManager;
+import com.example.photo_gallery.utilities.ImageGrouping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
     private String albumName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.album_activity_detail);
 
@@ -58,18 +58,20 @@ public class AlbumDetailActivity extends AppCompatActivity {
         setupDeleteAlbumButton();
     }
 
-    private void loadAlbumImages(){
-        Album selectedAlbum =albumManager.getAlbumByName(albumName);
+    // Load images for the selected album
+    private void loadAlbumImages() {
+        Album selectedAlbum = albumManager.getAlbumByName(albumName);
 
-        if(selectedAlbum != null)
-        {
-            albumImages = selectedAlbum.getListImage().stream()
+        if (selectedAlbum != null) {
+            // Sort images by date taken
+            albumImages = selectedAlbum.getImages().stream()
                     .sorted((i1, i2) -> Long.compare(i2.getDateTaken(), i1.getDateTaken()))
                     .collect(Collectors.toList());
 
+            // Group images by date
             Map<String, List<ImageItem>> groupedMap = ImageGrouping.groupByDate(albumImages);
             List<DateGroup> dateGroups = new ArrayList<>();
-            for(String date: groupedMap.keySet()){
+            for (String date : groupedMap.keySet()) {
                 dateGroups.add(new DateGroup(date, groupedMap.get(date)));
             }
 
@@ -81,7 +83,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
                     .map(ImageItem::getImagePath)
                     .collect(Collectors.toCollection(ArrayList::new));
 
-            DateGroupAdapter dateGroupAdapter = new DateGroupAdapter(this, dateGroups, imagePath -> {
+            DateGroupAdapter adapter = new DateGroupAdapter(this, dateGroups, imagePath -> {
                 Intent intent = new Intent(this, SoloImageActivity.class);
                 intent.putExtra("IMAGE_PATHS", imagePaths);
                 intent.putExtra("CURRENT_IMAGE_INDEX", imagePaths.indexOf(imagePath));
@@ -89,13 +91,13 @@ public class AlbumDetailActivity extends AppCompatActivity {
             });
 
             albumImagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            albumImagesRecyclerView.setAdapter(dateGroupAdapter);
+            albumImagesRecyclerView.setAdapter(adapter);
         }
     }
 
-    private void setupDeleteAlbumButton(){
-        if(albumName.equals("All"))
-        {
+    // Setup delete album button
+    private void setupDeleteAlbumButton() {
+        if (albumName.equals("All")) {
             deleteAlbumButton.setEnabled(false);
             deleteAlbumButton.setAlpha(0.5f);
         }
@@ -103,26 +105,30 @@ public class AlbumDetailActivity extends AppCompatActivity {
         deleteAlbumButton.setOnClickListener(v -> {
             new AlertDialog.Builder(this)
                     .setTitle("Delete Album")
-                    .setMessage("Are you sure you want to delete this album?")
-                    .setPositiveButton("Yes", (dialog, which) -> {
+                    .setMessage("Are you sure you want to delete album \"" + albumName + "\"?")
+                    .setPositiveButton("Delete", (dialog, which) -> {
                         albumManager.removeAlbum(albumName);
+
                         Toast.makeText(this, "Album deleted", Toast.LENGTH_SHORT).show();
+
                         onBackPressed();
                     })
-                    .setNegativeButton("No", null)
+                    .setNegativeButton("Cancel", null)
                     .show();
         });
     }
 
+    // Reload album images when activity is resumed
     @Override
     public void onResume() {
         super.onResume();
         loadAlbumImages();
     }
 
+    // Handle back button press
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == android.R.id.home){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
             return true;
         }

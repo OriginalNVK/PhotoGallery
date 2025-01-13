@@ -18,7 +18,6 @@ import com.example.photo_gallery.models.ImageItem;
 import java.util.Comparator;
 import java.util.List;
 
-
 public class AlbumThumbnailAdapter extends RecyclerView.Adapter<AlbumThumbnailAdapter.AlbumViewHolder> {
     private List<Album> albums;
     private Context context;
@@ -32,23 +31,23 @@ public class AlbumThumbnailAdapter extends RecyclerView.Adapter<AlbumThumbnailAd
 
     @NonNull
     @Override
-    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
-    {
+    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.album_thumbnail, parent, false);
         return new AlbumViewHolder(view);
     }
 
+    // Bind data to ViewHolder
     @Override
     public void onBindViewHolder(@NonNull AlbumViewHolder holder, int position) {
         Album album = albums.get(position);
 
         holder.albumName.setText(album.getName());
 
-        int imageCount = album.getListImage().size();
+        int imageCount = album.getImages().size();
         holder.albumImageCount.setText(imageCount + " images");
 
-        if (!album.getListImage().isEmpty()) {
-            ImageItem latestImage = album.getListImage().stream()
+        if (!album.getImages().isEmpty()) {
+            ImageItem latestImage = album.getImages().stream()
                     .max(Comparator.comparingLong(ImageItem::getDateTaken))
                     .get();
 
@@ -64,18 +63,22 @@ public class AlbumThumbnailAdapter extends RecyclerView.Adapter<AlbumThumbnailAd
     }
 
     @Override
-    public int getItemCount(){return albums.size();}
+    public int getItemCount() {
+        return albums.size();
+    }
 
-    public interface OnAlbumClickListener{
+    // Interface to handle album clicks
+    public interface OnAlbumClickListener {
         void onAlbumClick(Album album);
     }
 
-    public static class AlbumViewHolder extends RecyclerView.ViewHolder{
+    // ViewHolder for album thumbnail
+    public static class AlbumViewHolder extends RecyclerView.ViewHolder {
         ImageView albumThumbnail;
         TextView albumName;
         TextView albumImageCount;
 
-        public AlbumViewHolder(@NonNull View itemView){
+        public AlbumViewHolder(@NonNull View itemView) {
             super(itemView);
             albumThumbnail = itemView.findViewById(R.id.album_thumbnail);
             albumName = itemView.findViewById(R.id.album_name);

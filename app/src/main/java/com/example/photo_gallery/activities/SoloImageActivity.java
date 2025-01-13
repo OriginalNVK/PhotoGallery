@@ -15,14 +15,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,11 +38,13 @@ import com.bumptech.glide.request.target.Target;
 import com.example.photo_gallery.R;
 import com.example.photo_gallery.models.Album;
 import com.example.photo_gallery.models.ImageItem;
-import com.example.photo_gallery.utils.AlbumManager;
+import com.example.photo_gallery.utilities.AlbumManager;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +129,7 @@ public class SoloImageActivity extends AppCompatActivity {
             fileOutputStream.flush();
             fileOutputStream.close();
 
-            uri = FileProvider.getUriForFile(this, "com.example.mydemoapp.fileprovider", file);
+            uri = FileProvider.getUriForFile(this, "com.example.photo_gallery.fileprovider", file);
 
         } catch (Exception e) {
             Toast.makeText(this, "Failed to share image: " + e, Toast.LENGTH_LONG).show();

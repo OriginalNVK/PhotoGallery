@@ -1,9 +1,5 @@
 package com.example.photo_gallery.fragments;
 
-import static android.app.PendingIntent.getActivity;
-import static androidx.core.content.ContentProviderCompat.requireContext;
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,16 +21,18 @@ import com.example.photo_gallery.activities.AlbumDetailActivity;
 import com.example.photo_gallery.adapters.AlbumThumbnailAdapter;
 import com.example.photo_gallery.models.Album;
 import com.example.photo_gallery.models.ImageItem;
-import com.example.photo_gallery.utils.AlbumManager;
-import com.example.photo_gallery.utils.ImageFetcher;
+import com.example.photo_gallery.utilities.AlbumManager;
+import com.example.photo_gallery.utilities.ImageFetcher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlbumFragment extends Fragment {
+    // UI components
     private ImageButton addAlbumButton;
     private RecyclerView albumRecyclerView;
 
+    // Data
     private List<Album> albums;
     private AlbumManager albumManager;
     private AlbumThumbnailAdapter albumThumbnailAdapter;
@@ -42,7 +40,7 @@ public class AlbumFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle saveInstanceState){
+            @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_album, container, false);
 
         addAlbumButton = view.findViewById(R.id.add_album_button);
@@ -55,10 +53,12 @@ public class AlbumFragment extends Fragment {
         loadAlbums();
 
         addAlbumButton.setOnClickListener(v -> showAddAlbumDialog());
+
         return view;
     }
 
-    private void setupAlbumRecyclerView(){
+    // Setup RecyclerView for albums
+    private void setupAlbumRecyclerView() {
         albumThumbnailAdapter = new AlbumThumbnailAdapter(requireContext(), albums, album -> {
             Intent intent = new Intent(getActivity(), AlbumDetailActivity.class);
             intent.putExtra("ALBUM_NAME", album.getName());
@@ -69,47 +69,52 @@ public class AlbumFragment extends Fragment {
         albumRecyclerView.setAdapter(albumThumbnailAdapter);
     }
 
-    private void loadAlbums(){
-        ImageFetcher.getAllImagesAsync(requireContext(), new ImageFetcher.FetchImagesCallback(){
+    // Load albums from storage
+    private void loadAlbums() {
+        ImageFetcher.getAllImagesAsync(requireContext(), new ImageFetcher.FetchImagesCallback() {
             @Override
-            public void onImagesFetched(List<ImageItem> listImages)
-            {
-              requireActivity().runOnUiThread(() -> {
-                  albums.clear();
-                  albumManager.removeAlbum("All");
-                  Album allAlbum = new Album("All", listImages);
-                  albumManager.addAlbum(allAlbum);
+            public void onImagesFetched(List<ImageItem> allImages) {
+                requireActivity().runOnUiThread(() -> {
+                    albums.clear();
+                    albumManager.removeAlbum("All");
 
-                  albums.addAll(albumManager.loadAlbums());
-                  albumThumbnailAdapter.notifyDataSetChanged();
-              });
+                    Album allAlbum = new Album("All", allImages);
+                    albumManager.addAlbum(allAlbum);
+
+                    albums.addAll(albumManager.loadAlbums());
+                    albumThumbnailAdapter.notifyDataSetChanged();
+                });
             }
 
             @Override
-            public void onError(Exception e){
-                requireActivity().runOnUiThread(() -> {
-                    Toast.makeText(requireContext(), "Error loading images", Toast.LENGTH_SHORT).show();
-                });
+            public void onError(Exception e) {
+                requireActivity().runOnUiThread(() -> Toast
+                        .makeText(requireContext(), "Error fetching images: " + e.getMessage(), Toast.LENGTH_SHORT)
+                        .show());
             }
         });
     }
 
-    private void showAddAlbumDialog(){
+    // Show dialog to add new album
+    private void showAddAlbumDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Add Album");
+        builder.setTitle("Add new album");
 
         final EditText input = new EditText(requireContext());
         builder.setView(input);
 
         builder.setPositiveButton("Ok", (dialog, which) -> {
             String albumName = input.getText().toString();
-            if(albumName.isEmpty()){
+            if (albumName.isEmpty()) {
                 Toast.makeText(requireContext(), "Album name cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            boolean albumExists = albums.stream().anyMatch(album ->  album.getName().equals(albumName));
-            if(albumExists){
+            // Check if album with the same name already exists
+            boolean albumExists = albums.stream()
+                    .anyMatch(album -> album.getName().equals(albumName));
+
+            if (albumExists) {
                 Toast.makeText(requireContext(), "Album already exists", Toast.LENGTH_SHORT).show();
                 return;
             }

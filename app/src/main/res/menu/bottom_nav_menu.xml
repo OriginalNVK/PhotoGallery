@@ -3,10 +3,9 @@
     <item
         android:id="@+id/pictures"
         android:icon="@drawable/picture"
-        android:title="Pictures"/>
+        android:title="@string/action_picture" />
     <item
         android:id="@+id/album"
         android:icon="@drawable/album"
-        android:title="Album"/>
-
+        android:title="@string/action_Album" />
 </menu>

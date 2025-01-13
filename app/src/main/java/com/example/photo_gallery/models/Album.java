@@ -5,33 +5,35 @@ import java.util.List;
 
 public class Album {
     private String name;
-    private List<ImageItem> listImage;
+    private List<ImageItem> images;
 
     public Album(String name) {
         this.name = name;
-        this.listImage = new ArrayList<>();
+        this.images = new ArrayList<>();
     }
 
     public Album(String name, List<ImageItem> images) {
         this.name = name;
-        this.listImage = images;
+        this.images = images;
     }
 
     public String getName() {
         return name;
     }
 
-    public List<ImageItem> getListImage() {
-        return listImage;
+    public List<ImageItem> getImages() {
+        return images;
     }
 
-    public void setImages(List<ImageItem> images){
-        this.listImage = images;
+    public void setImages(List<ImageItem> images) {
+        this.images = images;
     }
 
-    public void addImage(ImageItem image) {listImage.add(image);}
+    public void addImage(ImageItem image) {
+        images.add(image);
+    }
 
-    public void removeImage(ImageItem image){listImage.remove(image);}
+    public void removeImage(ImageItem image) {
+        images.remove(image);
+    }
 }
-
-

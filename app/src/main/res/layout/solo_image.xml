@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/solo_image_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="3dp">
+android:id="@+id/solo_image_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:padding="3dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_solo_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="start"
-            android:background="@drawable/baseline_arrow_back_24"
-            android:contentDescription="Back"/>
-
-        <TextView
-            android:id="@+id/txtView_solo_image_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/light_purple"
-            android:gravity="center_vertical|center_horizontal"
-            android:paddingHorizontal="20dp"
-            android:layout_marginEnd="48dp"
-            android:textSize="24sp"
-            android:textColor="@android:color/primary_text_dark" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_solo_back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="start"
+                android:background="@drawable/baseline_arrow_back_24"
+                android:contentDescription="@string/solo_back_btn"/>
 
-    <ImageView
+            <TextView
+                android:id="@+id/txtView_solo_image_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_purple"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingHorizontal="20dp"
+                android:layout_marginEnd="48dp"
+                android:textSize="24sp"
+                android:textColor="@android:color/primary_text_dark" />
+
+        </LinearLayout>
+
+        <ImageView
         android:id="@+id/imgView_solo_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center|fill"
         android:layout_weight="2"
         android:paddingVertical="16dp"
-        android:contentDescription="Default Image Content" />
+        android:contentDescription="@string/solo_default_image_content" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
             android:id="@+id/btn_share_image"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/baseline_open_in_browser_24" />
+            android:background="@drawable/baseline_arrow_circle_up_24" />
         <Space
             android:layout_width="40dp"
             android:layout_height="match_parent" />
@@ -65,7 +65,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/baseline_adjust_24"
-            android:contentDescription="Set as background" />
+            android:contentDescription="@string/solo_set_phone_background_btn" />
 
         <Space
             android:layout_width="40dp"
@@ -76,7 +76,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/baseline_add_circle_outline_24"
-            android:contentDescription="Add to album" />
+            android:contentDescription="@string/solo_add_to_album_btn" />
 
         <Space
             android:layout_width="40dp"
@@ -87,6 +87,6 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/baseline_delete_outline_24"
-            android:contentDescription="Delete From Album" />
+            android:contentDescription="@string/solo_delete_from_album_btn" />
     </LinearLayout>
 </LinearLayout>

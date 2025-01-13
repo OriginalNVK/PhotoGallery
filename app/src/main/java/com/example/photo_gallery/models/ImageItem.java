@@ -1,14 +1,12 @@
 package com.example.photo_gallery.models;
 
-import java.text.SimpleDateFormat;
-
 public class ImageItem {
     private final String imagePath;
-    private final long dateToken;
+    private final long dateTaken;
 
-    public ImageItem(String imagePath, long dateToken) {
+    public ImageItem(String imagePath, long dateTaken) {
         this.imagePath = imagePath;
-        this.dateToken = dateToken;
+        this.dateTaken = dateTaken;
     }
 
     public String getImagePath() {
@@ -16,26 +14,28 @@ public class ImageItem {
     }
 
     public long getDateTaken() {
-        return dateToken;
+        return dateTaken;
     }
 
-    public String getDate(){
+    public String getDate() {
+        // Convert dateTaken to a formatted date string
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(new java.util.Date(dateToken));
+        return sdf.format(new java.util.Date(dateTaken));
     }
 
-    public String getMonth(){
+    public String getMonth() {
+        // Convert dateTaken to a formatted month string
         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("MMMM yyyy");
-        return sdf.format(new java.util.Date(dateToken));
+        return sdf.format(new java.util.Date(dateTaken));
     }
 
-    public String getYear(){
-        java.text.SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-        return sdf.format(new java.util.Date(dateToken));
+    public String getYear() {
+        // Convert dateTaken to a formatted year string
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy");
+        return sdf.format(new java.util.Date(dateTaken));
     }
 
-    public int getImageId()
-    {
+    public int getImageId() {
         return 0;
     }
 }

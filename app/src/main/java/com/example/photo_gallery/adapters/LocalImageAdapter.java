@@ -5,10 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.example.photo_gallery.R;
 
@@ -26,7 +24,7 @@ public class LocalImageAdapter extends RecyclerView.Adapter<LocalImageAdapter.Lo
     @NonNull
     @Override
     public LocalImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.image_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_image, parent, false);
         return new LocalImageViewHolder(view);
     }
 
