@@ -17,12 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photo_gallery.R;
+import com.example.photo_gallery.activities.AlbumDetailActivity;
 import com.example.photo_gallery.adapters.AlbumThumbnailAdapter;
 import com.example.photo_gallery.models.Album;
+import com.example.photo_gallery.models.ImageItem;
 import com.example.photo_gallery.utils.AlbumManager;
+import com.example.photo_gallery.utils.ImageFetcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +46,7 @@ public class AlbumFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_album, container, false);
 
         addAlbumButton = view.findViewById(R.id.add_album_button);
-        albumRecyclerView = view.findViewById(R.id.recycler_view);
+        albumRecyclerView = view.findViewById(R.id.album_recycler_view);
 
         albumManager = new AlbumManager(requireContext());
         albums = new ArrayList<>();
@@ -55,11 +59,14 @@ public class AlbumFragment extends Fragment {
     }
 
     private void setupAlbumRecyclerView(){
-        albumThumnailAdapter = new AlbumThumbnailAdapter(requireContext(), albums, album -> {
+        albumThumbnailAdapter = new AlbumThumbnailAdapter(requireContext(), albums, album -> {
             Intent intent = new Intent(getActivity(), AlbumDetailActivity.class);
             intent.putExtra("ALBUM_NAME", album.getName());
             startActivity(intent);
-        })
+        });
+
+        albumRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        albumRecyclerView.setAdapter(albumThumbnailAdapter);
     }
 
     private void loadAlbums(){
@@ -71,20 +78,20 @@ public class AlbumFragment extends Fragment {
                   albums.clear();
                   albumManager.removeAlbum("All");
                   Album allAlbum = new Album("All", listImages);
-                  albumManager.addAlbum(listImages);
+                  albumManager.addAlbum(allAlbum);
 
-                  albums.addAll(albumManager.getAlbums());
-                  albumThumbnailAdapter.notifyDateSetChanged();
-              })
+                  albums.addAll(albumManager.loadAlbums());
+                  albumThumbnailAdapter.notifyDataSetChanged();
+              });
             }
 
             @Override
             public void onError(Exception e){
                 requireActivity().runOnUiThread(() -> {
                     Toast.makeText(requireContext(), "Error loading images", Toast.LENGTH_SHORT).show();
-                })
+                });
             }
-        })
+        });
     }
 
     private void showAddAlbumDialog(){

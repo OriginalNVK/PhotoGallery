@@ -12,6 +12,11 @@ public class Album {
         this.listImage = new ArrayList<>();
     }
 
+    public Album(String name, List<ImageItem> images) {
+        this.name = name;
+        this.listImage = images;
+    }
+
     public String getName() {
         return name;
     }

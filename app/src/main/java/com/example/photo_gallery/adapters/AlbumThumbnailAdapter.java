@@ -1,9 +1,22 @@
 package com.example.photo_gallery.adapters;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.photo_gallery.R;
+import com.example.photo_gallery.models.Album;
+import com.example.photo_gallery.models.ImageItem;
+
+import java.util.Comparator;
+import java.util.List;
 
 
 public class AlbumThumbnailAdapter extends RecyclerView.Adapter{
@@ -19,9 +32,9 @@ public class AlbumThumbnailAdapter extends RecyclerView.Adapter{
 
     @NonNull
     @Override
-    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup  parent, int viewType)
+    public AlbumViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
-        View view = LayoutInFlater.from(context).inflate(R.layout.album_thumbnail, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.album_thumbnail, parent, false);
         return new AlbumViewHolder(view);
     }
 
@@ -32,8 +45,8 @@ public class AlbumThumbnailAdapter extends RecyclerView.Adapter{
 
         holder.albumName.setText(album.getName());
 
-        int imageCount = album.getImages().size();
-        holder.imageCount.setText(imageCount + " images");
+        int imageCount = album.getListImage().size();
+        holder.albumImageCount.setText(imageCount + " images");
 
         if(!album.getListImage().isEmpty()){
         ImageItem latestImage = album.getListImage().stream()

@@ -15,7 +15,7 @@ public class ImageItem {
         return imagePath;
     }
 
-    public long getDateToken() {
+    public long getDateTaken() {
         return dateToken;
     }
 

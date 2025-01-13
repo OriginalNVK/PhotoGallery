@@ -59,7 +59,7 @@ public class AlbumManager {
         saveAlbums(albums);
     }
 
-    public void removeAlbum(String albumName, String imagePath)
+    public void removeAlbum(String albumName)
     {
         List<Album> albums = loadAlbums();
 
@@ -99,7 +99,7 @@ public class AlbumManager {
 
         for(ImageItem image:  allAlbum.getListImage()){
             if(image.getImagePath().equals(imagePath)){
-                return image.getDateToken();
+                return image.getDateTaken();
             }
         }
 
